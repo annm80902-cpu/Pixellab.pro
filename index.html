@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelLab Enhanced | Adava Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --panel-grey: #1e1e1e;
+            --accent-gold: #ffd700;
+            --text-light: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Toolbar */
+        header {
+            background: var(--panel-grey);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo { color: var(--accent-gold); font-weight: bold; font-size: 1.2rem; }
+
+        /* Main Workspace */
+        main {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        #canvas-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            overflow: auto;
+        }
+
+        canvas {
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid #444;
+        }
+
+        /* Right Panel (Layers & Enhanced Features) */
+        #side-panel {
+            width: 300px;
+            background: var(--panel-grey);
+            border-left: 1px solid #333;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: var(--accent-gold); color: black; }
+
+        .template-card {
+            background: #2a2a2a;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px dashed var(--accent-gold);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">PIXELLAB PRO+</div>
+        <div class="actions">
+            <button class="btn" onclick="addText()">+ Add Text</button>
+            <button class="btn" onclick="exportImage()">Export 4K</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="canvas-container">
+            <canvas id="mainCanvas"></canvas>
+        </div>
+
+        <aside id="side-panel">
+            <h3>Enhanced Tools</h3>
+            <button class="btn">Cloud Fonts</button>
+            <button class="btn">3D Perspective</button>
+            
+            <div class="template-card">
+                <strong>Smart Templates</strong>
+                <p style="font-size: 12px; color: #888;">Adava Arts Logo Preset</p>
+                <button class="btn" style="width: 100%; font-size: 12px;">Apply</button>
+            </div>
+
+            <h3 style="margin-top: 20px;">Layers</h3>
+            <div id="layer-list" style="font-size: 13px; color: #bbb;">
+                No layers yet...
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        // Initialize Canvas
+        const canvas = new fabric.Canvas('mainCanvas', {
+            width: 500,
+            height: 500,
+            backgroundColor: '#2c3e50'
+        });
+
+        // Function to Add Text (Enhanced with custom font logic)
+        function addText() {
+            const text = new fabric.IText('New Text', {
+                left: 100,
+                top: 100,
+                fontFamily: 'Arial',
+                fill: '#ffffff',
+                fontSize: 40
+            });
+            canvas.add(text);
+            updateLayers();
+        }
+
+        // High-Res Export (4K Logic)
+        function exportImage() {
+            const dataURL = canvas.toDataURL({
+                format: 'png',
+                multiplier: 4 // This simulates the 4K export quality
+            });
+            const link = document.createElement('a');
+            link.download = 'Adava_Design_Pro.png';
+            link.href = dataURL;
+            link.click();
+        }
+
+        function updateLayers() {
+            const list = document.getElementById('layer-list');
+            list.innerHTML = canvas.getObjects().map((obj, i) => `<div>Layer ${i+1}: ${obj.type}</div>`).join('');
+        }
+    </script>
+</body>
+</html>
