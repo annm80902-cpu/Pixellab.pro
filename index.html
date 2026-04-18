@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelLab Pro+ | Dava AI Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&family=Bebas+Neue&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+</head>
+<body>
+
+    <header class="glass-header">
+        <div class="logo">PIXELLAB <span class="gold">PRO+</span></div>
+        <div class="top-actions">
+            <button onclick="undo()" class="icon-btn" title="Global History">↺</button>
+            <button onclick="redo()" class="icon-btn">↻</button>
+            <div class="divider"></div>
+            <button onclick="export4K()" class="btn-4k">EXPORT 8K (GPU)</button>
+        </div>
+    </header>
+
+    <div class="main-interface">
+        <nav class="floating-toolbar">
+            <button onclick="addText()" class="tool-btn" title="Typography (A)">A</button>
+            <button onclick="addShape()" class="tool-btn">⬔</button>
+            <label for="img-input" class="tool-btn">☁</label>
+            <input type="file" id="img-input" hidden accept="image/*">
+            <button onclick="toggleTemplates()" class="tool-btn">🗂</button>
+            <div class="spacer"></div>
+            <button onclick="deleteActive()" class="tool-btn delete">🗑</button>
+        </nav>
+
+        <section id="viewport">
+            <div class="canvas-holder">
+                <canvas id="mainCanvas"></canvas>
+            </div>
+        </section>
+
+        <aside class="side-panel">
+            <div class="panel-section">
+                <h3>DAVA AI TOOLS</h3>
+                <button class="ai-btn" onclick="aiRemoveBG()">Remove Background</button>
+                <button class="ai-btn" onclick="generateMockup()">3D Mockup Engine</button>
+                <button class="ai-btn" onclick="autoHarmonize()">Auto-Harmonize</button>
+            </div>
+
+            <div id="prop-controls" class="panel-section">
+                <h3>DYNAMIC SETTINGS</h3>
+                <label>Weight (Variable Font)</label>
+                <input type="range" min="100" max="900" id="font-weight" oninput="updateTextProp('fontWeight', this.value)">
+                
+                <label>Reflection Alpha</label>
+                <input type="range" min="0" max="1" step="0.1" oninput="applyReflection(this.value)">
+                
+                <label>Layer Depth (Z-Index)</label>
+                <div class="btn-group">
+                    <button onclick="moveLayer('front')">↑</button>
+                    <button onclick="moveLayer('back')">↓</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="template-modal" class="modal">
+        <div class="modal-content">
+            <h2>PRO TEMPLATES</h2>
+            <div class="grid">
+                <button onclick="loadTemplate('biz')">Business Brand Kit</button>
+                <button onclick="loadTemplate('bday')">Luxury Birthday</button>
+                <button onclick="loadTemplate('event')">Modern Event</button>
+            </div>
+            <button onclick="toggleTemplates()">Close</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+          </html>
+  
